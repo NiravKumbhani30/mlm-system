@@ -63,7 +63,7 @@ const packagelist = ({ props }) => {
       <div className="container mt-5">
         <div className="col-12 row">
           {packageList.slice(0, 3).map((data, index) => (
-            <div className="col-4" key={index}>
+            <div className="col-xl-4 col-md-6 col-sm-12" key={index}>
               <div className="col-12 coin-card">
                 <div className="d-flex align-items-center">
                   <img className="coin-img" src={data.image} />

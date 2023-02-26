@@ -1,5 +1,6 @@
 import { parseCookies } from "nookies";
 import React, { useState } from "react";
+import baseURL from "../helper/baseurl";
 
 const userprofile = ({ userData, coinData }) => {
   const [user, setUser] = useState({
@@ -63,22 +64,22 @@ const userprofile = ({ userData, coinData }) => {
               </div>
             </div>
           </div>
-          <div className="col-md-6">
-            <div className="profile-head">
-              <h5>{userData.first_name + " " + userData.last_name}</h5>
-              <p className="proile-rating"></p>
+            <div className="col-md-6 text-xl-start text-sm-center text-sm-center">
+              <div className="profile-head">
+                <h5>{userData.first_name + " " + userData.last_name}</h5>
+                <p className="proile-rating"></p>
+              </div>
             </div>
-          </div>
-          <div className="col-md-2">
-            <button
-              type="button"
-              className="btn btn-secondary"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-            >
-              Edit Name
-            </button>
-          </div>
+            <div className="col-md-2">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+              >
+                Edit Name
+              </button>
+            </div>
         </div>
         <div className="row">
           <div className="col-4">
@@ -281,7 +282,7 @@ const userprofile = ({ userData, coinData }) => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 
