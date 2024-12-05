@@ -2,7 +2,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import Cookies from "js-cookie";
-import baseURL from "../../helper/baseurl";
 
 const login = () => {
   const router = useRouter();
@@ -21,7 +20,7 @@ const login = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const res = await fetch(`${baseURL}/api/login`, {
+    const res = await fetch(`${process.env.BASE_URL}/api/login`, {
       method: "POST",
       body: JSON.stringify(user),
       headers: {

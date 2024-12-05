@@ -2,7 +2,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import ShortUniqueId from "short-unique-id";
-import baseURL from "../../helper/baseurl";
 
 const Register = () => {
   const router = useRouter();
@@ -32,7 +31,7 @@ const Register = () => {
       status: "Active",
     };
     console.log("userdata =", userData);
-    const res = await fetch(`${baseURL}/api/registation`, {
+    const res = await fetch(`${process.env.BASE_URL}/api/registation`, {
       method: "POST",
       body: JSON.stringify(userData),
       headers: {

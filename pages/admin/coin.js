@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Aside from "../../components/Aside";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
-import baseURL from "../../helper/baseurl"
+import process.env.BASE_URL from "../../helper/process.env.BASE_URL"
 
 const ManageCoin = (props) => {
   const [coins, setCoins] = useState({
@@ -36,7 +36,7 @@ const ManageCoin = (props) => {
       status: coins.status,
     };
     if (editId) {
-      const res = await fetch(`${baseURL}/api/coin/${editId}`, {
+      const res = await fetch(`${process.env.BASE_URL}/api/coin/${editId}`, {
         method: "PUT",
         body: JSON.stringify(prodData),
         headers: {
@@ -56,7 +56,7 @@ const ManageCoin = (props) => {
       return;
     }
 
-    const res = await fetch(`${baseURL}/api/coin`, {
+    const res = await fetch(`${process.env.BASE_URL}/api/coin`, {
       method: "POST",
       body: JSON.stringify(prodData),
       headers: {
@@ -99,7 +99,7 @@ const ManageCoin = (props) => {
   };
 
   const deleteHandler = async (id) => {
-    const res = await fetch(`${baseURL}/api/coin/${id}`, {
+    const res = await fetch(`${process.env.BASE_URL}/api/coin/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -110,7 +110,7 @@ const ManageCoin = (props) => {
   };
 
   const activeFilter = async () => {
-    const res = await fetch(`${baseURL}/api/coin/filter`, {
+    const res = await fetch(`${process.env.BASE_URL}/api/coin/filter`, {
       method: "POST",
       body: JSON.stringify("Active"),
       headers: {
@@ -122,7 +122,7 @@ const ManageCoin = (props) => {
   };
 
   const inactiveFilter = async () => {
-    const res = await fetch(`${baseURL}/api/coin/filter`, {
+    const res = await fetch(`${process.env.BASE_URL}/api/coin/filter`, {
       method: "POST",
       body: JSON.stringify("Inactive"),
       headers: {
@@ -134,14 +134,14 @@ const ManageCoin = (props) => {
   };
 
   const resetFilter = async () => {
-    const res = await fetch(`${baseURL}/api/coin`);
+    const res = await fetch(`${process.env.BASE_URL}/api/coin`);
     const result = await res.json();
     setDeleteCoin(result);
   };
 
   const switchHandler = async (data, e) => {
     const prodData = { ...deleteCoin, status: e.target.checked ? "Active" : "Inactive" };
-    const res = await fetch(`${baseURL}/api/coin/${data._id}`, {
+    const res = await fetch(`${process.env.BASE_URL}/api/coin/${data._id}`, {
       method: "PUT",
       body: JSON.stringify(prodData),
       headers: {
@@ -463,7 +463,7 @@ const ManageCoin = (props) => {
 };
 
 export async function getServerSideProps() {
-  const res = await fetch(`${baseURL}/api/coin`);
+  const res = await fetch(`${process.env.BASE_URL}/api/coin`);
   const data = await res.json();
   return {
     props: {

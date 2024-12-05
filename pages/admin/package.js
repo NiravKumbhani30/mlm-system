@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Aside from "../../components/Aside";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
-import baseURL from "../../helper/baseurl"
+import process.env.BASE_URL from "../../helper/process.env.BASE_URL"
 
 const ManagePackage = (props) => {
   const [packages, setPackages] = useState({
@@ -36,7 +36,7 @@ const ManagePackage = (props) => {
       status: packages.status,
     };
     if (editId) {
-      const res = await fetch(`${baseURL}/api/package/${editId}`, {
+      const res = await fetch(`${process.env.BASE_URL}/api/package/${editId}`, {
         method: "PUT",
         body: JSON.stringify(prodData),
         headers: {
@@ -56,7 +56,7 @@ const ManagePackage = (props) => {
       return;
     }
 
-    const res = await fetch(`${baseURL}/api/package`, {
+    const res = await fetch(`${process.env.BASE_URL}/api/package`, {
       method: "POST",
       body: JSON.stringify(prodData),
       headers: {
@@ -99,7 +99,7 @@ const ManagePackage = (props) => {
   };
 
   const deleteHandler = async (id) => {
-    const res = await fetch(`${baseURL}/api/package/${id}`, {
+    const res = await fetch(`${process.env.BASE_URL}/api/package/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -110,7 +110,7 @@ const ManagePackage = (props) => {
   };
 
   const activeFilter = async () => {
-    const res = await fetch(`${baseURL}/api/package/filter`, {
+    const res = await fetch(`${process.env.BASE_URL}/api/package/filter`, {
       method: "POST",
       body: JSON.stringify("Active"),
       headers: {
@@ -122,7 +122,7 @@ const ManagePackage = (props) => {
   };
 
   const inactiveFilter = async () => {
-    const res = await fetch(`${baseURL}/api/package/filter`, {
+    const res = await fetch(`${process.env.BASE_URL}/api/package/filter`, {
       method: "POST",
       body: JSON.stringify("Inactive"),
       headers: {
@@ -134,7 +134,7 @@ const ManagePackage = (props) => {
   };
 
   const resetFilter = async () => {
-    const res = await fetch(`${baseURL}/api/package`);
+    const res = await fetch(`${process.env.BASE_URL}/api/package`);
     const result = await res.json();
     setDeletePackage(result);
   };
@@ -144,7 +144,7 @@ const ManagePackage = (props) => {
       ...deletePackage,
       status: e.target.checked ? "Active" : "Inactive",
     };
-    const res = await fetch(`${baseURL}/api/package/${data._id}`, {
+    const res = await fetch(`${process.env.BASE_URL}/api/package/${data._id}`, {
       method: "PUT",
       body: JSON.stringify(prodData),
       headers: {
@@ -473,7 +473,7 @@ const ManagePackage = (props) => {
 };
 
 export async function getServerSideProps() {
-  const res = await fetch(`${baseURL}/api/package`);
+  const res = await fetch(`${process.env.BASE_URL}/api/package`);
   const data = await res.json();
   return {
     props: {

@@ -1,6 +1,5 @@
 import { parseCookies } from "nookies";
 import React, { useState } from "react";
-import baseURL from "../helper/baseurl"
 
 
 const packagelist = ({ props }) => {
@@ -13,18 +12,18 @@ const packagelist = ({ props }) => {
   const filterData = props.tokenData.filter((data) => data.balance > 0);
 
   const buyHandler = async (id) => {
-    const res = await fetch(`${baseURL}/api/package/${id}`);
+    const res = await fetch(`${process.env.BASE_URL}/api/package/${id}`);
     const packageData = await res.json();
     setPackageInfo(packageData);
   };
   const selectCoin = async (id) => {
     const coinId = id.target.value;
-    const res = await fetch(`${baseURL}/api/coin/${coinId}`);
+    const res = await fetch(`${process.env.BASE_URL}/api/coin/${coinId}`);
     const coinData = await res.json();
     setCoinPrice(coinData);
 
     const walletRes = await fetch(
-      `${baseURL}/api/wallet/${coinId}`,
+      `${process.env.BASE_URL}/api/wallet/${coinId}`,
       {
         method: "POST",
         body: JSON.stringify(props.tokenData[0].userId),
@@ -49,7 +48,7 @@ const packagelist = ({ props }) => {
       coinBalance: coinAmount.balance,
       packageAmount: (packageInfo.price / coinPrice.usdPrice).toFixed(4),
     };
-    await fetch(`${baseURL}/api/wallet`, {
+    await fetch(`${process.env.BASE_URL}/api/wallet`, {
       method: "POST",
       body: JSON.stringify(BuyDetails),
       headers: {
@@ -220,16 +219,16 @@ export async function getServerSideProps(ctx) {
   const { token } = parseCookies(ctx);
 
   if (token) {
-    const tokenRes = await fetch(`${baseURL}/api/wallet`, {
+    const tokenRes = await fetch(`${process.env.BASE_URL}/api/wallet`, {
       headers: {
         Authorization: token,
       },
     });
     const tokenData = await tokenRes.json();
-    const coinRes = await fetch(`${baseURL}/api/coin/filter`);
+    const coinRes = await fetch(`${process.env.BASE_URL}/api/coin/filter`);
     const coinData = await coinRes.json();
 
-    const res = await fetch(`${baseURL}/api/package/filter`);
+    const res = await fetch(`${process.env.BASE_URL}/api/package/filter`);
     const data = await res.json();
     return {
       props: {

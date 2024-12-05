@@ -1,6 +1,5 @@
 import { parseCookies } from "nookies";
 import React, { useState } from "react";
-import baseURL from "../helper/baseurl";
 
 const userprofile = ({ userData, coinData }) => {
   const [user, setUser] = useState({
@@ -36,7 +35,7 @@ const userprofile = ({ userData, coinData }) => {
       status: user.status,
     };
 
-    const res = await fetch(`${baseURL}/api/user/${userId}`, {
+    const res = await fetch(`${process.env.BASE_URL}/api/user/${userId}`, {
       method: "PUT",
       body: JSON.stringify(prodData),
       headers: {
@@ -64,22 +63,22 @@ const userprofile = ({ userData, coinData }) => {
               </div>
             </div>
           </div>
-            <div className="col-md-6 text-xl-start text-sm-center text-sm-center">
-              <div className="profile-head">
-                <h5>{userData.first_name + " " + userData.last_name}</h5>
-                <p className="proile-rating"></p>
-              </div>
+          <div className="col-md-6 text-xl-start text-sm-center text-sm-center">
+            <div className="profile-head">
+              <h5>{userData.first_name + " " + userData.last_name}</h5>
+              <p className="proile-rating"></p>
             </div>
-            <div className="col-md-2">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
-              >
-                Edit Name
-              </button>
-            </div>
+          </div>
+          <div className="col-md-2">
+            <button
+              type="button"
+              className="btn btn-secondary"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+            >
+              Edit Name
+            </button>
+          </div>
         </div>
         <div className="row">
           <div className="col-4">
@@ -289,7 +288,7 @@ const userprofile = ({ userData, coinData }) => {
 export async function getServerSideProps(ctx) {
   const { token } = parseCookies(ctx);
 
-  const res = await fetch(`${baseURL}/api/coin/balance`, {
+  const res = await fetch(`${process.env.BASE_URL}/api/coin/balance`, {
     headers: {
       Authorization: token,
     },
@@ -297,7 +296,7 @@ export async function getServerSideProps(ctx) {
   const coinData = await res.json();
 
   if (token) {
-    const res = await fetch(`${baseURL}/api/userprofile`, {
+    const res = await fetch(`${process.env.BASE_URL}/api/userprofile`, {
       headers: {
         Authorization: token,
       },

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Aside from "../../components/Aside";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
-import baseURL from "../../helper/baseurl";
+import process.env.BASE_URL from "../../helper/process.env.BASE_URL";
 
 const ManageUser = ({ props }) => {
   const [users, setUsers] = useState({
@@ -41,7 +41,7 @@ const ManageUser = ({ props }) => {
       status: users.status,
     };
     if (editId) {
-      const res = await fetch(`${baseURL}/api/user/${editId}`, {
+      const res = await fetch(`${process.env.BASE_URL}/api/user/${editId}`, {
         method: "PUT",
         body: JSON.stringify(prodData),
         headers: {
@@ -62,7 +62,7 @@ const ManageUser = ({ props }) => {
       return;
     }
 
-    const res = await fetch(`${baseURL}/api/user`, {
+    const res = await fetch(`${process.env.BASE_URL}/api/user`, {
       method: "POST",
       body: JSON.stringify(prodData),
       headers: {
@@ -94,7 +94,7 @@ const ManageUser = ({ props }) => {
   };
 
   const deleteHandler = async (id) => {
-    const res = await fetch(`${baseURL}/api/user/${id}`, {
+    const res = await fetch(`${process.env.BASE_URL}/api/user/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -105,7 +105,7 @@ const ManageUser = ({ props }) => {
   };
 
   const activeFilter = async () => {
-    const res = await fetch(`${baseURL}/api/user/filter`, {
+    const res = await fetch(`${process.env.BASE_URL}/api/user/filter`, {
       method: "POST",
       body: JSON.stringify("Active"),
       headers: {
@@ -117,7 +117,7 @@ const ManageUser = ({ props }) => {
   };
 
   const inactiveFilter = async () => {
-    const res = await fetch(`${baseURL}/api/user/filter`, {
+    const res = await fetch(`${process.env.BASE_URL}/api/user/filter`, {
       method: "POST",
       body: JSON.stringify("Inactive"),
       headers: {
@@ -129,7 +129,7 @@ const ManageUser = ({ props }) => {
   };
 
   const resetFilter = async () => {
-    const res = await fetch(`${baseURL}/api/user`);
+    const res = await fetch(`${process.env.BASE_URL}/api/user`);
     const result = await res.json();
     setDeleteUser(result);
     setStartDate("");
@@ -141,7 +141,7 @@ const ManageUser = ({ props }) => {
       ...deleteUser,
       status: e.target.checked ? "Active" : "Inactive",
     };
-    const res = await fetch(`${baseURL}/api/user/${data._id}`, {
+    const res = await fetch(`${process.env.BASE_URL}/api/user/${data._id}`, {
       method: "PUT",
       body: JSON.stringify(prodData),
       headers: {
@@ -164,7 +164,7 @@ const ManageUser = ({ props }) => {
       userId: userData._id,
       quantity,
     };
-    const res = await fetch(`${baseURL}/api/user/${userId}`, {
+    const res = await fetch(`${process.env.BASE_URL}/api/user/${userId}`, {
       method: "POST",
       body: JSON.stringify(addUserBalance),
       headers: {
@@ -175,7 +175,7 @@ const ManageUser = ({ props }) => {
 
   const selectCoin = async (id) => {
     const coinId = id.target.value;
-    const res = await fetch(`${baseURL}/api/coin/${coinId}`);
+    const res = await fetch(`${process.env.BASE_URL}/api/coin/${coinId}`);
     const coinData = await res.json();
     setCoinPrice(coinData);
   };
@@ -183,7 +183,7 @@ const ManageUser = ({ props }) => {
   useEffect(() => {
     if (startDate && endDate) {
       setTimeout(async () => {
-        const res = await fetch(`${baseURL}/api/user/datefilter`, {
+        const res = await fetch(`${process.env.BASE_URL}/api/user/datefilter`, {
           method: "POST",
           body: JSON.stringify({ startDate, endDate }),
           headers: {
@@ -648,10 +648,10 @@ const ManageUser = ({ props }) => {
 };
 
 export async function getServerSideProps() {
-  const coinRes = await fetch(`${baseURL}/api/coin/filter`);
+  const coinRes = await fetch(`${process.env.BASE_URL}/api/coin/filter`);
   const coinData = await coinRes.json();
 
-  const res = await fetch(`${baseURL}/api/user`);
+  const res = await fetch(`${process.env.BASE_URL}/api/user`);
   const data = await res.json();
   return {
     props: {

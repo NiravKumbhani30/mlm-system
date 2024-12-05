@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Aside from "../../components/Aside";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
-import baseURL from "../../helper/baseurl"
 
 const packageHistory = (props) => {
   const [packageHistory, setPackageHistory] = useState(props.data);
@@ -10,7 +9,7 @@ const packageHistory = (props) => {
   const [endDate, setEndDate] = useState("");
 
   const resetFilter = async () => {
-    const res = await fetch(`${baseURL}/api/packagehistory`);
+    const res = await fetch(`${process.env.BASE_URL}/api/packagehistory`);
     const result = await res.json();
     setPackageHistory(result.data);
     setStartDate("");
@@ -22,7 +21,7 @@ const packageHistory = (props) => {
     if (startDate && endDate) {
       setTimeout(async () => {
         const res = await fetch(
-          `${baseURL}/api/packagehistory/datefilter`,
+          `${process.env.BASE_URL}/api/packagehistory/datefilter`,
           {
             method: "POST",
             body: JSON.stringify({ startDate, endDate }),
@@ -140,7 +139,7 @@ const packageHistory = (props) => {
 };
 
 export async function getServerSideProps() {
-  const res = await fetch(`${baseURL}/api/packagehistory`);
+  const res = await fetch(`${process.env.BASE_URL}/api/packagehistory`);
   const data = await res.json();
   return {
     props: {
